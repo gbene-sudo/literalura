@@ -44,10 +44,15 @@ La aplicación permite:
 El proyecto sigue una arquitectura en capas:
 
 ├── Model → Entidades JPA
+
 ├── DTO → Clases para mapear datos de la API
+
 ├── Repository → Interfaces JPARepository
+
 ├── Service → Lógica de negocio
+
 ├── Principal → Menú e interacción por consola
+
 
 ## 🗃️ Base de datos
 
