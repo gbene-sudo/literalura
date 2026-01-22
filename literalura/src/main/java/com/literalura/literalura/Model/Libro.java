@@ -17,7 +17,7 @@ public class Libro {
     private String idioma;
     private boolean copyright;
     private double numeroDescargas;
-    @ManyToMany(cascade = CascadeType.ALL) //@ManyToMany porque un libro puede tener varios autores, un autor puede tener varios libros
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //@ManyToMany porque un libro puede tener varios autores, un autor puede tener varios libros
     private List<Autor> autores;
 
     public Libro(){};//constructor default para que JPA no tire errrores
@@ -76,5 +76,15 @@ public class Libro {
 
     public void setAutores(List<Autor> autores) {
         this.autores = autores;
+    }
+
+    @Override
+    public String toString() {
+        return "---- LIBRO ----" + "\n" +
+                " Titulo: " + titulo + "\n" +
+                " Idioma: " + idioma + "\n" +
+                " Copyright: " + copyright+ "\n" +
+                " NumeroDescargas:" + numeroDescargas +"\n" +
+                " Autores: " + autores + "\n";
     }
 }

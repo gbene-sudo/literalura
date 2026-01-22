@@ -11,26 +11,26 @@ public class Autor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nombre;
-    private String fechaNacimiento;
-    private String fechaMuerte;
+    private Integer fechaNacimiento;
+    private Integer fechaMuerte;
     @ManyToMany(mappedBy = "autores") //lo conecto con la lista de autores
     private List<Libro> libros;
 
     public Autor(){};//constructor default para que JPA no tire errrores
 
-    public String getFechaNacimiento() {
+    public Integer getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Integer fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getFechaMuerte() {
+    public Integer getFechaMuerte() {
         return fechaMuerte;
     }
 
-    public void setFechaMuerte(String fechaMuerte) {
+    public void setFechaMuerte(Integer fechaMuerte) {
         this.fechaMuerte = fechaMuerte;
     }
 
@@ -48,5 +48,10 @@ public class Autor {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return nombre + "(" + fechaNacimiento + "-" + fechaMuerte + ")" ;
     }
 }

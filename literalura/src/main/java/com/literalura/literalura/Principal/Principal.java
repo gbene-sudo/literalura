@@ -1,21 +1,23 @@
 package com.literalura.literalura.Principal;
 
+import com.literalura.literalura.Model.Libro;
 import com.literalura.literalura.Repositorio.LibroRepository;
 import com.literalura.literalura.Servicio.ConsumoAPI;
 import com.literalura.literalura.Servicio.ConvierteDatos;
+import com.literalura.literalura.Servicio.LibroService;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Principal {
-    private static final String URL_BASE = "https://gutendex.com/books?ids=";
-    private ConsumoAPI consumoAPI = new ConsumoAPI();
-    private ConvierteDatos conversor = new ConvierteDatos();
-    private Scanner teclado = new Scanner(System.in);
-    private LibroRepository repositorio;
+    //private ConsumoAPI consumoAPI = new ConsumoAPI();
+    //private ConvierteDatos conversor = new ConvierteDatos();
+    private final Scanner teclado = new Scanner(System.in);
+    private final LibroService libroService;
 
 
-    public Principal(LibroRepository repository) {
-        this.repositorio = repository;
+    public Principal(LibroService libroService) {
+        this.libroService = libroService;
     }
 
     public void muestraElMenu() {
@@ -42,7 +44,7 @@ public class Principal {
                     mostrarLibrosRegistrados();
                     break;
                 case 3:
-                    mostrarAutoresRegistrados();
+                   mostrarAutoresRegistrados();
                     break;
                 case 4:
                     mostrarAutoresVivos();
@@ -59,16 +61,51 @@ public class Principal {
         }
 
     }
+    //TODOS LOS METODOS IMPLEMENTADOS EN LibroService
+    private void buscarLibroTitulo() {
+        System.out.println("Ingrese el nombre del libro:");
+        String nom = teclado.nextLine();
 
-//    private void buscarLibroTitulo() {
-//        System.out.println("Ingrese el nombre del libro: ");
-//        var nom = teclado.nextLine();
-//        Optional<Datos> libroBuscado = repositorio.findByTituloContainsIgnoreCase(nom);
-//        if (libroBuscado.isPresent()){
-//            System.out.println(libroBuscado.get());
-//        }else {
-//            System.out.println("Libro no encontrado");
-//        }
-//    }
+        libroService.buscarLibroPorTitulo(nom).ifPresentOrElse(System.out::println, () -> System.out.println("Libro no encontrado"));
+    }
+
+    private void mostrarLibrosRegistrados() {
+        libroService.listarLibros().forEach(System.out::println);
+    }
+    private void mostrarAutoresRegistrados() {
+        libroService.listarAutores().forEach(System.out::println);
+    }
+    private void mostrarAutoresVivos() {
+        System.out.println("Ingrese el año: ");
+        int anio = teclado.nextInt();
+        teclado.nextLine();
+
+        var autores =libroService.listarAutoresVivos(anio);
+        if (autores.isEmpty()) {
+            System.out.println("No se encontraron autores vivos en ese año.");
+        } else {
+            autores.forEach(System.out::println);
+        }
+    }
+    private void mostrarLibrosPorIdioma() {
+        System.out.println("Ingrese el idioma (ej: es, en):");
+        String idioma = teclado.nextLine();
+
+        var libros = libroService.listadoPorIdioma(idioma);
+
+        if (libros.isEmpty()) {
+            System.out.println("No se encontraron libros en ese idioma.");
+        } else {
+            libros.forEach(System.out::println);
+        }
+    }
+
+
+
+
+
+
+
+
 
 }

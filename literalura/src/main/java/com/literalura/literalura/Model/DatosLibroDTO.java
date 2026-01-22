@@ -10,7 +10,7 @@ public record DatosLibroDTO(
         @JsonAlias("id") int id,
         @JsonAlias("title") String titulo,
         @JsonAlias("authors")List<DatosAutorDTO> autor,
-        @JsonAlias("languages") String idioma,
+        @JsonAlias("languages") List<String> idioma,
         @JsonAlias("copyright") Boolean copyright,
         @JsonAlias("download_count") Double numeroDeDescargas
 ) {
